@@ -5,7 +5,6 @@
 package dao;
 
 import model.Habit;
-import util.DBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
