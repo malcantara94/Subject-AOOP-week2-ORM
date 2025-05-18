@@ -15,6 +15,7 @@ public class HabitLog {
     @JoinColumn(name = "habit_id", nullable = false)
     private Habit habit;
 
+    @Column(name = "date_logged")
     private LocalDate dateLogged;
 
     public HabitLog() {}
