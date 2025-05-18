@@ -5,8 +5,15 @@
 package model;
 
 import java.time.LocalDate;
+import javax.persistence.*;
 
+
+//@Entity
+//@Table(name = "habit_log")
 public class HabitLog {
+    
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int habitId;
     private LocalDate dateLogged;

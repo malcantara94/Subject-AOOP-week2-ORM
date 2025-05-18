@@ -4,16 +4,32 @@
  */
 package model;
 
-public class Habit {
-    private int id;
-    private String title;
-    private String description;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "habit")
+public class Habit {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    
+    @Column(nullable = false)
+    private String title;
+    
+    private String description;
+    
+    // Constructors
+    public Habit() {
+        // Hibernate needs this - no-argument constructor
+    }
+        
     public Habit(String title, String description) {
         this.title = title;
         this.description = description;
     }
 
+    
     public Habit(int id, String title, String description) {
         this(title, description);
         this.id = id;
