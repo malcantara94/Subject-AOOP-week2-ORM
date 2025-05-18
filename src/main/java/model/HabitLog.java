@@ -1,57 +1,45 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
 import java.time.LocalDate;
 import javax.persistence.*;
 
-
-//@Entity
-//@Table(name = "habit_log")
+@Entity
+@Table(name = "habit_log")
 public class HabitLog {
-    
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int habitId;
+
+    @ManyToOne
+    @JoinColumn(name = "habit_id", nullable = false)
+    private Habit habit;
+
     private LocalDate dateLogged;
 
-    public HabitLog(int habitId, LocalDate dateLogged) {
-        this.habitId = habitId;
+    public HabitLog() {}
+
+    public HabitLog(Habit habit, LocalDate dateLogged) {
+        this.habit = habit;
         this.dateLogged = dateLogged;
     }
 
-    public HabitLog(int id, int habitId, LocalDate dateLogged) {
-        this(habitId, dateLogged);
+    public HabitLog(int id, Habit habit, LocalDate dateLogged) {
+        this(habit, dateLogged);
         this.id = id;
     }
 
     // Getters and setters...
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) { this.id = id; }
 
-    public int getHabitId() {
-        return habitId;
-    }
+    public Habit getHabit() { return habit; }
 
-    public void setHabitId(int habitId) {
-        this.habitId = habitId;
-    }
+    public void setHabit(Habit habit) { this.habit = habit; }
 
-    public LocalDate getDateLogged() {
-        return dateLogged;
-    }
+    public LocalDate getDateLogged() { return dateLogged; }
 
-    public void setDateLogged(LocalDate dateLogged) {
-        this.dateLogged = dateLogged;
-    }
-    
+    public void setDateLogged(LocalDate dateLogged) { this.dateLogged = dateLogged; }
 }

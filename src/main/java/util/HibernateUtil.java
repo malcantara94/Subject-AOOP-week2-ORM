@@ -4,6 +4,8 @@
  */
 package util;
 
+import model.Habit;
+import model.HabitLog;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -11,19 +13,26 @@ import org.hibernate.cfg.Configuration;
  *
  * @author admin
  */
-
 public class HibernateUtil {
-  private static final SessionFactory sessionFactory;
+    private static final SessionFactory sessionFactory;
 
-  static {
-    try {
-      sessionFactory = new Configuration().configure().buildSessionFactory();
-    } catch (Throwable ex) {
-      throw new ExceptionInInitializerError(ex);
+    static {
+        try {
+            Configuration configuration = new Configuration().configure();
+
+            // Explicitly add annotated classes
+            configuration.addAnnotatedClass(Habit.class);
+            configuration.addAnnotatedClass(HabitLog.class);
+
+            sessionFactory = configuration.buildSessionFactory();
+        } catch (Throwable ex) {
+            // Log the exception (optional: use a logging framework)
+            System.err.println("Initial SessionFactory creation failed." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
     }
-  }
 
-  public static SessionFactory getSessionFactory() {
-    return sessionFactory;
-  }
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
 }
