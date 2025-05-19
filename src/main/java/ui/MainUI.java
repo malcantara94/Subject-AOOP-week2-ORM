@@ -73,7 +73,7 @@ public class MainUI extends JFrame {
 
             if (!title.isEmpty()) {
                 Habit habit = new Habit(title, desc);
-                habitDAO.addHabit(habit); // Hibernate saves entity
+                habitDAO.saveHabit(habit); // Hibernate saves entity
                 showHabits();
                 titleField.setText("");
                 descArea.setText("");

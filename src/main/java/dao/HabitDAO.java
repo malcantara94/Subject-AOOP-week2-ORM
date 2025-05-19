@@ -1,34 +1,63 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
 
-import model.Habit;
-
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
+import model.Habit;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
 
 public class HabitDAO {
 
-    // Add a new habit to the database
-    public void addHabit(Habit habit) {
-      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-        Transaction tx = session.beginTransaction();
-        session.save(habit);
-        tx.commit();
-      }
+    // Create (Save a new habit)
+    public void saveHabit(Habit habit) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.save(habit);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        }
     }
 
-    // Get all habits from the database
+    // Read (Get all habits)
     public List<Habit> getAllHabits() {
-      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-        return session.createQuery("FROM Habit", Habit.class).list();
-      }
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("from Habit", Habit.class).list();
+        }
     }
 
+    // Update (Update existing habit)
+    public void updateHabit(Habit habit) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.update(habit);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        }
+    }
+
+    // Delete (Remove habit)
+    public void deleteHabit(Habit habit) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.delete(habit);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        }
+    }
+
+    // Optional: Find habit by id
+    public Habit getHabitById(int id) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.get(Habit.class, id);
+        }
+    }
 }
